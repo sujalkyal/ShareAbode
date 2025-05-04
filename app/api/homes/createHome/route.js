@@ -1,1 +1,34 @@
 // route to create a new home listing
+
+import { NextResponse } from 'next/server';
+import { db } from '../../../lib/db';
+
+export async function POST(request) {
+  const { title, description, stateId, cityId, availableFrom, availableTo, requirements, images } = await request.json();
+
+    // Validate required fields
+    if (!title || !description || !stateId || !cityId || !availableFrom || !availableTo) {
+        return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+  try {
+    // Create a new home listing in the database
+    const newHome = await db.home.create({
+      data: {
+        title,
+        description,
+        stateId,
+        cityId,
+        availableFrom: new Date(availableFrom),
+        availableTo: new Date(availableTo),
+        requirements,
+        images,
+      },
+    });
+
+    return NextResponse.json(newHome, { status: 201 });
+  } catch (error) {
+    console.error('Error creating home:', error);
+    return NextResponse.json({ error: 'Failed to create home' }, { status: 500 });
+  }
+}

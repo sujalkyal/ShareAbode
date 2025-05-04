@@ -63,7 +63,5 @@ model Booking {
   userId    String
   home      Home     @relation(fields: [homeId], references: [id])
   homeId    String
-  startDate DateTime
-  endDate   DateTime
   createdAt DateTime @default(now())
 }
