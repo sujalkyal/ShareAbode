@@ -52,6 +52,7 @@ model Home {
   availableFrom  DateTime
   availableTo    DateTime
   requirements   String?
+  price          Float
   images         String[]
   bookings       Booking[]
   createdAt      DateTime    @default(now())
