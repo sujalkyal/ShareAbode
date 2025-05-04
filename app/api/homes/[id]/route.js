@@ -1,0 +1,1 @@
+// route to get a home details by id in params

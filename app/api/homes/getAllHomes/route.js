@@ -1,0 +1,1 @@
+// route to get all currently listed homes, also delete the homes records whose end date is less than the current date

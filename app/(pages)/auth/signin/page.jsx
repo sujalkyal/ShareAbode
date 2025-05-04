@@ -3,11 +3,30 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const result = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
+  
+    if (result.error) {
+      setError('Invalid email or password');
+    } else {
+      router.push('/homes');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] flex flex-col md:flex-row">
@@ -38,7 +57,7 @@ export default function SignInPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="space-y-6"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-[#000000]">

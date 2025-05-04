@@ -1,0 +1,1 @@
+// route for booking a home by a user
