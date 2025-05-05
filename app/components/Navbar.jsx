@@ -97,7 +97,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <NavLink href="/homes">Homes</NavLink>
+            <NavLink href="/homes">Home</NavLink>
             <NavLink href="/about">About</NavLink>
             <NavLink href="/contact">Contact</NavLink>
             <NavLink href="/addHome">New Property</NavLink>

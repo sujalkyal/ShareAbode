@@ -83,8 +83,10 @@ export default function HomePage() {
   // Filter and sort homes
   const filteredHomes = homes
     .filter((home) => {
-      if (selectedState && home.stateId !== selectedState) return false;
-      if (selectedCity && home.cityId !== selectedCity) return false;
+      console.log(homes);
+      console.log("Home stateId:", home.state.id, "Selected stateId:", selectedState);
+      if (selectedState && home.state.id !== Number(selectedState)) return false;
+      if (selectedCity && home.city.id !== Number(selectedCity)) return false;
       return true;
     })
     .sort((a, b) => {

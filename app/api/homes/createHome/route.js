@@ -48,8 +48,8 @@ export async function POST(request) {
       data: {
         title,
         description,
-        stateId,
-        cityId,
+        stateId: parseInt(stateId),
+        cityId: parseInt(cityId),
         availableFrom: new Date(availableFrom),
         availableTo: new Date(availableTo),
         requirements,
