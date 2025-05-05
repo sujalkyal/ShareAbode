@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Calendar, MapPin, Plus, HomeIcon, Clock, ChevronRight } from "lucide-react"
+import axios from "axios"
 
 // Animation variants
 const containerVariants = {
@@ -30,82 +31,58 @@ export default function ProfilePage() {
   const [userHomes, setUserHomes] = useState([])
   const [userBookings, setUserBookings] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    // Simulate API call to fetch user data
-    setTimeout(() => {
-      // Mock user data
-      const mockUser = {
-        id: "1",
-        name: "Alex Johnson",
-        email: "alex@example.com",
-        createdAt: "2022-05-15T10:30:00Z",
-        avatar: "/placeholder.svg?height=200&width=200",
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("/api/user")
+        const userData = response.data
+
+        setUser(userData)
+        setUserHomes(
+          userData.homes.map((home) => ({
+            ...home,
+            cityName: home.city.name,
+            stateName: home.state.name,
+            imageUrl: home.images[0] || "/login_image.jpeg",
+          }))
+        )
+        setUserBookings(
+          userData.bookings.map((booking) => ({
+            ...booking,
+            homeTitle: booking.home.title,
+            homeImage: booking.home.images[0] || "/login_image.jpeg",
+            cityName: booking.home.city.name,
+            stateName: booking.home.state.name,
+            startDate: booking.home.availableFrom,
+            endDate: booking.home.availableTo,
+            totalPrice: booking.home.price,
+          }))
+        )
+        setIsLoading(false)
+      } catch (err) {
+        console.error("Error fetching user data:", err)
+        setError("Failed to load user profile")
+        setIsLoading(false)
       }
+    }
 
-      // Mock homes data
-      const mockHomes = [
-        {
-          id: "1",
-          title: "Beachfront Villa",
-          description: "Beautiful villa with ocean views",
-          price: 250,
-          stateName: "Florida",
-          cityName: "Miami",
-          availableFrom: "2023-06-01",
-          availableTo: "2023-08-31",
-          imageUrl: "/placeholder.svg?height=300&width=400",
-        },
-        {
-          id: "2",
-          title: "Mountain Cabin",
-          description: "Cozy cabin in the mountains",
-          price: 150,
-          stateName: "California",
-          cityName: "Lake Tahoe",
-          availableFrom: "2023-07-01",
-          availableTo: "2023-09-30",
-          imageUrl: "/placeholder.svg?height=300&width=400",
-        },
-      ]
-
-      // Mock bookings data
-      const mockBookings = [
-        {
-          id: "1",
-          homeId: "3",
-          homeTitle: "Downtown Loft",
-          homeImage: "/placeholder.svg?height=300&width=400",
-          startDate: "2023-06-15",
-          endDate: "2023-06-20",
-          totalPrice: 1000,
-          cityName: "New York",
-          stateName: "New York",
-        },
-        {
-          id: "2",
-          homeId: "4",
-          homeTitle: "Desert Retreat",
-          homeImage: "/placeholder.svg?height=300&width=400",
-          startDate: "2023-07-10",
-          endDate: "2023-07-15",
-          totalPrice: 900,
-          cityName: "Austin",
-          stateName: "Texas",
-        },
-      ]
-
-      setUser(mockUser)
-      setUserHomes(mockHomes)
-      setUserBookings(mockBookings)
-      setIsLoading(false)
-    }, 1000)
+    fetchUserData()
   }, [])
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#F7F7F7] flex items-center justify-center">
         <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#854836]"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#F7F7F7] flex items-center justify-center">
+        <p className="text-red-500">{error}</p>
       </div>
     )
   }
@@ -135,7 +112,7 @@ export default function ProfilePage() {
             <div className="md:flex">
               <div className="md:w-1/3 bg-[#854836] text-white p-6 flex flex-col items-center justify-center">
                 <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white">
-                  <img src={user.avatar || "/placeholder.svg"} alt={user.name} className="w-full h-full object-cover" />
+                  <img src={user.avatar || "/user-placeholder.png"} alt={user.name} className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-xl font-bold">{user.name}</h3>
                 <p className="text-[#FFB22C]">Member since {new Date(user.createdAt).toLocaleDateString()}</p>
@@ -162,10 +139,10 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="mt-6 flex space-x-4">
-                  <button className="px-4 py-2 bg-[#FFB22C] text-black rounded-lg font-medium hover:bg-opacity-90 transition-colors">
+                  <button className="px-4 py-2 bg-[#FFB22C] text-black rounded-lg font-medium hover:bg-opacity-90 transition-colors hover:cursor-pointer">
                     Edit Profile
                   </button>
-                  <button className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                  <button className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors hover:cursor-pointer">
                     Change Password
                   </button>
                 </div>
@@ -179,7 +156,7 @@ export default function ProfilePage() {
           <motion.div className="flex justify-between items-center mb-6" variants={itemVariants}>
             <h2 className="text-2xl font-bold">My Properties</h2>
             <Link
-              href="/homes/new"
+              href="/addHome"
               className="flex items-center bg-[#FFB22C] text-black px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
             >
               <Plus size={18} className="mr-2" />
@@ -199,7 +176,7 @@ export default function ProfilePage() {
                   <Link href={`/homes/${home.id}`}>
                     <div className="relative h-48 overflow-hidden">
                       <img
-                        src={home.imageUrl || "/placeholder.svg"}
+                        src={home.images[0] || "/login_image.jpeg"}
                         alt={home.title}
                         className="w-full h-full object-cover"
                       />
@@ -239,7 +216,7 @@ export default function ProfilePage() {
                 You haven't listed any properties yet. Start sharing your space and earning income today.
               </p>
               <Link
-                href="/homes/new"
+                href="/addHome"
                 className="inline-flex items-center bg-[#FFB22C] text-black px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
               >
                 <Plus size={18} className="mr-2" />
@@ -267,7 +244,7 @@ export default function ProfilePage() {
                     <div className="md:w-1/4">
                       <div className="h-full">
                         <img
-                          src={booking.homeImage || "/placeholder.svg"}
+                          src={booking.homeImage || "/login_image.jpeg"}
                           alt={booking.homeTitle}
                           className="w-full h-full object-cover"
                         />

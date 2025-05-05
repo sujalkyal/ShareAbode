@@ -128,7 +128,7 @@ export default function AddHomePage() {
           <div className="grid md:grid-cols-2 gap-6">
             {[
               { label: "Title", name: "title", type: "text" },
-              { label: "Price", name: "price", type: "number" },
+              { label: "Price Per Night", name: "price", type: "number" },
             ].map(({ label, name, type }) => (
               <motion.div
                 key={name}

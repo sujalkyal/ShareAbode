@@ -11,11 +11,16 @@ export async function GET() {
         availableTo: {
           lt: new Date(),
         },
-      },
+      }
     });
 
     // get all currently listed homes
-    const homes = await db.home.findMany({});
+    const homes = await db.home.findMany({
+      include: {
+        city: true,
+        state: true,
+      },
+    });
 
     return NextResponse.json(homes, { status: 200 });
   } catch (error) {
