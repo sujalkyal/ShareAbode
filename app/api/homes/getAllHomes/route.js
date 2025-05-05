@@ -16,6 +16,9 @@ export async function GET() {
 
     // get all currently listed homes
     const homes = await db.home.findMany({
+      where: {
+        available: true
+      },
       include: {
         city: true,
         state: true,

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import axios from "axios";
 import {
   MapPin,
   Calendar,
@@ -42,57 +43,52 @@ export default function HomeDetailsPage() {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // Simulate API call to fetch home data
-    setTimeout(() => {
-      // Mock home data
-      const mockHome = {
-        id: params.id,
-        title: "Luxury Beachfront Villa",
-        description:
-          "Experience the ultimate beachfront luxury in this stunning villa. With panoramic ocean views, a private pool, and direct beach access, this property offers the perfect getaway for those seeking relaxation and natural beauty. The spacious interior features high-end finishes, a gourmet kitchen, and comfortable living spaces designed for both entertaining and unwinding.",
-        price: 350,
-        stateId: "3",
-        cityId: "5",
-        stateName: "Florida",
-        cityName: "Miami",
-        availableFrom: "2023-06-01",
-        availableTo: "2023-08-31",
-        bedrooms: 4,
-        bathrooms: 3,
-        maxGuests: 8,
-        amenities: [
-          "Pool",
-          "Beach Access",
-          "WiFi",
-          "Air Conditioning",
-          "Kitchen",
-          "Free Parking",
-          "Washer & Dryer",
-          "TV",
-          "Workspace",
-          "Patio",
-        ],
-        host: {
-          id: "1",
-          name: "Sarah Johnson",
-          avatar: "/placeholder.svg?height=100&width=100",
-          joinedDate: "2021-03-15",
-          responseRate: 98,
-        },
-        rating: 4.9,
-        reviews: 124,
-        images: [
-          "/placeholder.svg?height=600&width=800",
-          "/placeholder.svg?height=600&width=800",
-          "/placeholder.svg?height=600&width=800",
-          "/placeholder.svg?height=600&width=800",
-          "/placeholder.svg?height=600&width=800",
-        ],
-      };
+    const fetchHome = async () => {
+      try {
+        const res = await axios.get(`/api/homes/${params.id}`);
+        const data = res.data;
 
-      setHome(mockHome);
-      setIsLoading(false);
-    }, 1000);
+        // Transform if needed
+        setHome({
+          ...data,
+          cityName: data.city?.name || "",
+          stateName: data.state?.name || "",
+          host: {
+            id: data.user.id,
+            name: data.user.name,
+            avatar: "/user-placeholder.png",
+            joinedDate: data.user.createdAt,
+            responseRate: 98,
+          },
+          rating: 4.9,
+          reviews: 124,
+          bedrooms: 4,
+          bathrooms: 3,
+          maxGuests: 8,
+          amenities: [
+            "Pool",
+            "Beach Access",
+            "WiFi",
+            "Air Conditioning",
+            "Kitchen",
+            "Free Parking",
+            "Washer & Dryer",
+            "TV",
+            "Workspace",
+            "Patio",
+          ],
+        });
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch home:", error);
+        setIsLoading(false);
+      }
+    };
+
+    if (params.id) {
+      fetchHome();
+    }
   }, [params.id]);
 
   const nextImage = () => {
@@ -130,14 +126,14 @@ export default function HomeDetailsPage() {
         {/* Navigation arrows */}
         <button
           onClick={prevImage}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors hover:cursor-pointer"
           aria-label="Previous image"
         >
           <ChevronLeft size={24} />
         </button>
         <button
           onClick={nextImage}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors hover:cursor-pointer"
           aria-label="Next image"
         >
           <ChevronRight size={24} />
@@ -151,7 +147,7 @@ export default function HomeDetailsPage() {
         {/* Back button */}
         <button
           onClick={() => router.back()}
-          className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
+          className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors hover:cursor-pointer"
           aria-label="Go back"
         >
           <ChevronLeft size={24} />
@@ -161,7 +157,7 @@ export default function HomeDetailsPage() {
         <div className="absolute top-4 right-4 flex space-x-2">
           <button
             onClick={toggleFavorite}
-            className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
+            className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors hover:cursor-pointer"
             aria-label={
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
@@ -172,7 +168,7 @@ export default function HomeDetailsPage() {
             />
           </button>
           <button
-            className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
+            className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors hover:cursor-pointer"
             aria-label="Share"
           >
             <Share size={24} />
@@ -181,7 +177,7 @@ export default function HomeDetailsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Main Content */}
           <motion.div
             className="lg:col-span-2"
@@ -287,7 +283,7 @@ export default function HomeDetailsPage() {
 
           {/* Booking Sidebar */}
           <motion.div
-            className="bg-white p-6 rounded-lg shadow-md h-fit sticky top-8"
+            className="bg-white p-6 rounded-lg shadow-md sticky top-24"
             initial="hidden"
             animate="visible"
             variants={fadeIn}
@@ -305,8 +301,8 @@ export default function HomeDetailsPage() {
               </div>
             </div>
             <button
-              onClick={() => router.push(`/book/${home.id}`)}
-              className="w-full bg-[#FFB22C] text-black font-semibold py-3 px-4 rounded-xl hover:bg-[#eaa122] transition-colors text-center mt-4"
+              onClick={() => router.push(`/homes/${home.id}/checkout`)}
+              className="w-full bg-[#FFB22C] text-black font-semibold py-3 px-4 rounded-xl hover:bg-[#eaa122] transition-colors text-center mt-4 hover:cursor-pointer"
             >
               Book Now
             </button>

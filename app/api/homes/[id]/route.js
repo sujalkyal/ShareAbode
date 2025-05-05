@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import db from '../../../lib/db';
 
 export async function GET(request, { params }) {
-  const { id } = params;
+  const id = await params.id;
 
   try {
     // Fetch the home listing from the database using the provided ID
@@ -12,7 +12,8 @@ export async function GET(request, { params }) {
       where: { id },
       include: {
         state: true,
-        city: true
+        city: true,
+        user: true
       },
     });
 

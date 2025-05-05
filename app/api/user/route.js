@@ -22,8 +22,25 @@ export async function GET(request) {
                 id: userId,
             },
             include: {
-                bookings: true,
-                homes: true,
+                bookings: {
+                    include: {
+                        home: {
+                            include: {
+                                city: true,
+                                state: true,
+                            },
+                        }
+                    }
+                },
+                homes: {
+                    where: {
+                        available: true,
+                    },
+                    include: {
+                        city: true,
+                        state: true,
+                    },
+                }
             },
         });
 

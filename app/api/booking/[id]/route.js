@@ -13,7 +13,7 @@ export async function POST(request, { params }) {
     }
 
     const userId = session.user.id;
-    const { homeId } = await request.json();
+    const homeId = await params.id;
 
     try {
         // Check if the home exists
@@ -32,6 +32,16 @@ export async function POST(request, { params }) {
             data: {
                 userId,
                 homeId,
+            },
+        });
+
+        // set the available for the home as false
+        await db.home.update({
+            where: {
+                id: homeId,
+            },
+            data: {
+                available: false,
             },
         });
 
