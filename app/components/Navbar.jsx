@@ -219,19 +219,19 @@ const Navbar = () => {
             variants={mobileMenuVariants}
           >
             <div className="px-4 pt-2 pb-4 space-y-1 bg-white shadow-lg">
-              <MobileNavLink href="/profile" variants={linkVariants}>
+              <MobileNavLink href="/profile" variants={linkVariants} onClick={() => setIsOpen(false)}>
                 Profile
               </MobileNavLink>
-              <MobileNavLink href="/homes" variants={linkVariants}>
-                Homes
+              <MobileNavLink href="/homes" variants={linkVariants} onClick={() => setIsOpen(false)}>
+                Home
               </MobileNavLink>
-              <MobileNavLink href="/about" variants={linkVariants}>
+              <MobileNavLink href="/about" variants={linkVariants} onClick={() => setIsOpen(false)}>
                 About
               </MobileNavLink>
-              <MobileNavLink href="/contact" variants={linkVariants}>
+              <MobileNavLink href="/contact" variants={linkVariants} onClick={() => setIsOpen(false)}>
                 Contact
               </MobileNavLink>
-              <MobileNavLink href="/addHome" variants={linkVariants}>
+              <MobileNavLink href="/addHome" variants={linkVariants} onClick={() => setIsOpen(false)}>
                 New Property
               </MobileNavLink>
 
@@ -271,11 +271,12 @@ const NavLink = ({ href, children }) => {
 };
 
 // Mobile Navigation Link Component
-const MobileNavLink = ({ href, children, variants }) => {
+const MobileNavLink = ({ href, children, variants, onClick }) => {
   return (
     <motion.div variants={variants}>
       <Link
         href={href}
+        onClick={onClick}
         className="flex py-2 px-3 rounded-md text-base font-medium hover:bg-gray-100 transition-colors duration-200 justify-center"
         style={{ color: "#000000" }}
       >
