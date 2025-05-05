@@ -2,7 +2,7 @@
 // get userId from session
 
 import { NextResponse } from 'next/server';
-import { db } from '../../lib/db';
+import db from '../../lib/db';
 import { authOptions } from "../../lib/auth"
 import { getServerSession } from "next-auth/next";
 

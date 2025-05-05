@@ -1,7 +1,7 @@
 // route for booking a home by a user
 
 import { NextResponse } from 'next/server';
-import { db } from '../../../lib/db';
+import db from '../../../lib/db';
 import { authOptions } from "../../../lib/auth"
 import { getServerSession } from "next-auth/next";
 

@@ -1,7 +1,7 @@
 // route to get all currently listed homes, also delete the homes records whose end date is less than the current date
 
 import { NextResponse } from "next/server";
-import { db } from "../../../lib/db";
+import db from "../../../lib/db";
 
 export async function GET() {
   try {

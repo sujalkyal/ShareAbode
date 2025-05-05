@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, ArrowRight } from "lucide-react"
+import { Mail, Phone, MapPin, Linkedin, Github, Globe, ArrowRight  } from "lucide-react";
 
 const Footer = () => {
   const [email, setEmail] = useState("")
@@ -40,15 +40,15 @@ const Footer = () => {
           {/* Quick Links */}
           <motion.div variants={itemVariants}>
             <h3 className="text-xl font-bold mb-4" style={{ color: "#F7F7F7" }}>
-              StayNest
+              ShareAbode
             </h3>
             <p className="mb-6 text-sm" style={{ color: "#F7F7F7" }}>
-              Find your perfect stay with StayNest. Luxury accommodations for every traveler.
+              Find your perfect stay with ShareAbode. Luxury accommodations for every traveler.
             </p>
             <div className="flex space-x-4">
-              <SocialIcon icon={<Twitter size={18} />} href="https://twitter.com" />
-              <SocialIcon icon={<Instagram size={18} />} href="https://instagram.com" />
-              <SocialIcon icon={<Linkedin size={18} />} href="https://linkedin.com" />
+              <SocialIcon icon={<Globe size={18} />} href="https://sujaldev-ten.vercel.app/" />
+              <SocialIcon icon={<Github size={18} />} href="https://github.com/sujalkyal" />
+              <SocialIcon icon={<Linkedin size={18} />} href="http://linkedin.com/in/sujal-kyal-712b9024b" />
             </div>
           </motion.div>
 
@@ -58,12 +58,11 @@ const Footer = () => {
               Quick Links
             </h3>
             <ul className="space-y-2">
-              <FooterLink href="/">Home</FooterLink>
-              <FooterLink href="/listings">Listings</FooterLink>
+              <FooterLink href="/homes">Home</FooterLink>
               <FooterLink href="/about">About Us</FooterLink>
               <FooterLink href="/contact">Contact</FooterLink>
-              <FooterLink href="/privacy">Privacy Policy</FooterLink>
-              <FooterLink href="/terms">Terms of Service</FooterLink>
+              <FooterLink href="#">Privacy Policy</FooterLink>
+              <FooterLink href="#">Terms of Service</FooterLink>
             </ul>
           </motion.div>
 
@@ -87,7 +86,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-2 flex-shrink-0" style={{ color: "#FFB22C" }} />
-                <span style={{ color: "#F7F7F7" }}>info@staynest.com</span>
+                <span style={{ color: "#F7F7F7" }}>info@shareabode.com</span>
               </li>
             </ul>
           </motion.div>
@@ -110,8 +109,13 @@ const Footer = () => {
                   className="w-full px-4 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#FFB22C]"
                 />
                 <button
-                  className="absolute right-1 top-1 p-1 rounded-md transition-colors duration-200"
+                  className="absolute right-1 top-1 p-1 rounded-md transition-colors duration-200 hover:cursor-pointer"
                   style={{ backgroundColor: "#FFB22C" }}
+                  onClick={() => {
+                    if(email){
+                      setEmail("")
+                    }
+                  }}
                 >
                   <ArrowRight size={20} color="#854836" />
                 </button>
@@ -129,25 +133,25 @@ const Footer = () => {
         {/* Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm mb-4 md:mb-0" style={{ color: "#F7F7F7" }}>
-            © {new Date().getFullYear()} StayNest. All rights reserved.
+            © {new Date().getFullYear()} ShareAbode. All rights reserved.
           </p>
           <div className="flex space-x-6">
             <Link
-              href="/privacy"
+              href="#"
               className="text-sm transition-colors duration-200 hover:text-[#FFB22C]"
               style={{ color: "#F7F7F7" }}
             >
               Privacy
             </Link>
             <Link
-              href="/terms"
+              href="#"
               className="text-sm transition-colors duration-200 hover:text-[#FFB22C]"
               style={{ color: "#F7F7F7" }}
             >
               Terms
             </Link>
             <Link
-              href="/sitemap"
+              href="#"
               className="text-sm transition-colors duration-200 hover:text-[#FFB22C]"
               style={{ color: "#F7F7F7" }}
             >

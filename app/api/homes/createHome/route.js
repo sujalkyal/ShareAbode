@@ -1,15 +1,25 @@
 // route to create a new home listing
 
 import { NextResponse } from 'next/server';
-import { db } from '../../../lib/db';
+import db from '../../../lib/db';
+import { authOptions } from "../../../lib/auth"
+import { getServerSession } from "next-auth/next";
 
 export async function POST(request) {
   const { title, description, stateId, cityId, availableFrom, availableTo, requirements, images } = await request.json();
 
-    // Validate required fields
-    if (!title || !description || !stateId || !cityId || !availableFrom || !availableTo) {
-        return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-    }
+  // Validate required fields
+  if (!title || !description || !stateId || !cityId || !availableFrom || !availableTo) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+  }
+
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+}
+
+const userId = session.user.id;
 
   try {
     // Create a new home listing in the database
@@ -23,6 +33,7 @@ export async function POST(request) {
         availableTo: new Date(availableTo),
         requirements,
         images,
+        userId
       },
     });
 

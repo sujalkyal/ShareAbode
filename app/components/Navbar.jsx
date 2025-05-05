@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: session } = useSession();
 
   // Handle scroll effect
   useEffect(() => {
@@ -100,30 +103,69 @@ const Navbar = () => {
             <NavLink href="/addHome">New Property</NavLink>
           </div>
 
-          {/* Auth Button */}
-          <div className="hidden md:flex items-center">
-            <button
-              className="px-4 py-2 rounded-md font-medium transition-colors duration-200"
-              style={{
-                backgroundColor: "#FFB22C",
-                color: "#000000",
-                border: "2px solid transparent",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = "#f0a520";
-                e.currentTarget.style.borderColor = "#854836";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = "#FFB22C";
-                e.currentTarget.style.borderColor = "transparent";
-              }}
-            >
-              Log Out
-            </button>
-          </div>
+          {/* Profile and Logout */}
+          {session && (
+            <div className="hidden md:flex items-center space-x-4">
+              <motion.div
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center space-x-2"
+              >
+                <Link
+                  href="/profile"
+                  className="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+                >
+                  <Image
+                    src="/user-placeholder.png"
+                    alt="Profile"
+                    width={32}
+                    height={32}
+                    className="rounded-full object-cover"
+                  />
+                  <span className="text-sm font-medium text-black">
+                    {session.user.name || session.user.email.split("@")[0]}
+                  </span>
+                </Link>
+              </motion.div>
+
+              <button
+                className="px-4 py-2 rounded-md font-medium transition-colors duration-200 hover:cursor-pointer"
+                style={{
+                  backgroundColor: "#FFB22C",
+                  color: "#000000",
+                  border: "2px solid transparent",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = "#f0a520";
+                  e.currentTarget.style.borderColor = "#854836";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = "#FFB22C";
+                  e.currentTarget.style.borderColor = "transparent";
+                }}
+                onClick={() => signOut({ callbackUrl: "/auth/signin" })}
+              >
+                Log Out
+              </button>
+            </div>
+          )}
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
+            {session && (
+              <Link
+              href="/profile"
+              className="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+            >
+              <Image
+                src="/user-placeholder.png"
+                alt="Profile"
+                width={32}
+                height={32}
+                className="rounded-full mr-3 object-cover"
+              />
+              </Link>
+            )}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
@@ -177,6 +219,9 @@ const Navbar = () => {
             variants={mobileMenuVariants}
           >
             <div className="px-4 pt-2 pb-4 space-y-1 bg-white shadow-lg">
+              <MobileNavLink href="/profile" variants={linkVariants}>
+                Profile
+              </MobileNavLink>
               <MobileNavLink href="/homes" variants={linkVariants}>
                 Homes
               </MobileNavLink>
@@ -185,6 +230,9 @@ const Navbar = () => {
               </MobileNavLink>
               <MobileNavLink href="/contact" variants={linkVariants}>
                 Contact
+              </MobileNavLink>
+              <MobileNavLink href="/addHome" variants={linkVariants}>
+                New Property
               </MobileNavLink>
 
               <motion.div variants={linkVariants} className="pt-2">

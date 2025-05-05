@@ -53,7 +53,7 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">About StayNest</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">About ShareAbode</h1>
           <p className="text-xl md:text-2xl">Discover our story and mission</p>
         </motion.div>
       </div>
@@ -65,7 +65,7 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-lg mb-4">
-                Founded in 2020, StayNest began with a simple idea: to create a platform where travelers could find
+                Founded in 2020, ShareAbode began with a simple idea: to create a platform where travelers could find
                 unique, comfortable homes that feel like their own, no matter where they are in the world.
               </p>
               <p className="text-lg mb-4">
@@ -80,7 +80,7 @@ export default function AboutPage() {
             <div className="bg-white p-6 rounded-xl shadow-md">
               <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden bg-gray-200">
                 <img
-                  src="/placeholder.svg?height=400&width=600"
+                  src="/house_image_1.jpeg?height=400&width=600"
                   alt="Our team"
                   className="w-full h-full object-cover"
                 />
@@ -157,21 +157,21 @@ export default function AboutPage() {
             initial="hidden"
             animate="visible"
           >
-            <TeamMember name="Jane Doe" role="Founder & CEO" image="/placeholder.svg?height=300&width=300" />
+            <TeamMember name="Jane Doe" role="Founder & CEO" image="/image1.jpeg?height=300&width=300" />
             <TeamMember
               name="John Smith"
               role="Chief Operations Officer"
-              image="/placeholder.svg?height=300&width=300"
+              image="/image2.jpeg?height=300&width=300"
             />
             <TeamMember
               name="Emily Johnson"
               role="Head of Customer Experience"
-              image="/placeholder.svg?height=300&width=300"
+              image="/image3.jpeg?height=300&width=300"
             />
             <TeamMember
               name="Michael Brown"
               role="Chief Technology Officer"
-              image="/placeholder.svg?height=300&width=300"
+              image="/image4.jpeg?height=300&width=300"
             />
           </motion.div>
         </Section>
