@@ -84,8 +84,14 @@ export default function HomePage() {
   const filteredHomes = homes
     .filter((home) => {
       console.log(homes);
-      console.log("Home stateId:", home.state.id, "Selected stateId:", selectedState);
-      if (selectedState && home.state.id !== Number(selectedState)) return false;
+      console.log(
+        "Home stateId:",
+        home.state.id,
+        "Selected stateId:",
+        selectedState
+      );
+      if (selectedState && home.state.id !== Number(selectedState))
+        return false;
       if (selectedCity && home.city.id !== Number(selectedCity)) return false;
       return true;
     })
@@ -245,7 +251,7 @@ export default function HomePage() {
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                       />
                       <div className="absolute bottom-0 left-0 bg-[#FFB22C] text-black px-3 py-1 font-medium">
-                        ${home.price}/night
+                        ₹{home.price}/night
                       </div>
                     </div>
                     <div className="p-4">

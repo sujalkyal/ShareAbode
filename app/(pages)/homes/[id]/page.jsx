@@ -291,7 +291,7 @@ export default function HomeDetailsPage() {
             <div className="flex justify-between items-end mb-4">
               <div>
                 <p className="text-xl font-semibold text-[#854836]">
-                  ${home.price}
+                  ₹{home.price}
                 </p>
                 <p className="text-sm text-gray-500">per night</p>
               </div>

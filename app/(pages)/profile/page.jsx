@@ -223,7 +223,7 @@ export default function ProfilePage() {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute bottom-0 left-0 bg-[#FFB22C] text-black px-3 py-1 font-medium">
-                        ${home.price}/night
+                        ₹{home.price}/night
                       </div>
                     </div>
                     <div className="p-4">
@@ -326,7 +326,7 @@ export default function ProfilePage() {
                         </div>
                         <div className="text-right">
                           <div className="text-lg font-bold">
-                            $
+                            ₹
                             {(
                               booking.home.price *
                               ((new Date(booking.home.availableTo) -

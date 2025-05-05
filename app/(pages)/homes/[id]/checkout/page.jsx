@@ -25,7 +25,7 @@ export default function BookingPage() {
     email: "",
     phone: "",
   });
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const fetchHome = async () => {
@@ -59,21 +59,21 @@ export default function BookingPage() {
 
   const handleConfirm = async () => {
     if (!form.name || !form.email || !form.phone) {
-      toast.error("Please fill all the fields.")
-      return
+      toast.error("Please fill all the fields.");
+      return;
     }
-  
-    setConfirming(true)
-  
+
+    setConfirming(true);
+
     try {
-      const response = await axios.post(`/api/booking/${params.id}`)
-  
+      const response = await axios.post(`/api/booking/${params.id}`);
+
       if (response.status !== 201) {
-        throw new Error("Booking failed")
+        throw new Error("Booking failed");
       }
-  
-      setConfirmed(true)
-  
+
+      setConfirmed(true);
+
       toast.success("Booking confirmed!", {
         position: "top-center",
         autoClose: 2500,
@@ -87,18 +87,18 @@ export default function BookingPage() {
           backgroundColor: "#854836",
           color: "#fff",
         },
-      })
-  
+      });
+
       setTimeout(() => {
-        router.push("/homes")
-      }, 3000)
+        router.push("/homes");
+      }, 3000);
     } catch (error) {
-      console.error("Booking failed", error)
-      toast.error("Something went wrong!")
+      console.error("Booking failed", error);
+      toast.error("Something went wrong!");
     } finally {
-      setConfirming(false)
+      setConfirming(false);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -135,7 +135,7 @@ export default function BookingPage() {
               <p className="mt-3 text-gray-700">{home.description}</p>
             </div>
             <div className="mt-4 text-lg font-semibold text-[#854836]">
-              ${home.price} / night
+              ₹{home.price} / night
             </div>
           </div>
         </motion.div>
