@@ -246,7 +246,7 @@ export default function HomePage() {
                   <Link href={`/homes/${home.id}`}>
                     <div className="relative h-48 overflow-hidden">
                       <img
-                        src={home.images[0] || "/login_image.jpeg"}
+                        src={home.images[0] || "/image-placeholder.png"}
                         alt={home.title}
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                       />

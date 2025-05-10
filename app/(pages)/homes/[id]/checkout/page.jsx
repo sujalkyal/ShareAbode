@@ -40,7 +40,7 @@ export default function BookingPage() {
           cityName: data.city?.name,
           stateName: data.state?.name,
           description: data.description,
-          image: data.images[0] || "/login-image.jpeg?height=600&width=800",
+          image: data.images[0] || "/image-placeholder.png?height=600&width=800",
           availableFrom: data.availableFrom,
           availableTo: data.availableTo,
         });

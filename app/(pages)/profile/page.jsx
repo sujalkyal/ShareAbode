@@ -52,14 +52,14 @@ export default function ProfilePage() {
             ...home,
             cityName: home.city.name,
             stateName: home.state.name,
-            imageUrl: home.images[0] || "/login_image.jpeg",
+            imageUrl: home.images[0] || "/image-placeholder.png",
           }))
         );
         setUserBookings(
           userData.bookings.map((booking) => ({
             ...booking,
             homeTitle: booking.home.title,
-            homeImage: booking.home.images[0] || "/login_image.jpeg",
+            homeImage: booking.home.images[0] || "/image-placeholder.png",
             cityName: booking.home.city.name,
             stateName: booking.home.state.name,
             startDate: booking.home.availableFrom,
@@ -218,7 +218,7 @@ export default function ProfilePage() {
                   <Link href={`/homes/${home.id}`}>
                     <div className="relative h-48 overflow-hidden">
                       <img
-                        src={home.images[0] || "/login_image.jpeg"}
+                        src={home.images[0] || "/image-placeholder.png"}
                         alt={home.title}
                         className="w-full h-full object-cover"
                       />
@@ -304,7 +304,7 @@ export default function ProfilePage() {
                     <div className="md:w-1/4">
                       <div className="h-full">
                         <img
-                          src={booking.home.images[0] || "/login_image.jpeg"}
+                          src={booking.home.images[0] || "/image-placeholder.png"}
                           alt={booking.home.title}
                           className="w-full h-full object-cover"
                         />
