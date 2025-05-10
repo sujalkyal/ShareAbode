@@ -145,6 +145,7 @@ export default function AddHomePage() {
                   value={form[name]}
                   onChange={(e) => setForm({ ...form, [name]: e.target.value })}
                   placeholder={`Enter ${label.toLowerCase()}`}
+                  required
                 />
               </motion.div>
             ))}
@@ -167,6 +168,8 @@ export default function AddHomePage() {
                 value={form[name]}
                 onChange={(e) => setForm({ ...form, [name]: e.target.value })}
                 placeholder={`Write ${name}...`}
+                // description is required, requirements is optional
+                required={name === "description"}
               />
             </motion.div>
           ))}
@@ -185,6 +188,7 @@ export default function AddHomePage() {
                 }}
                 value={form.stateId}
                 disabled={loadingStates}
+                required
               >
                 <option value="">Select State</option>
                 {states.map((s) => (
@@ -204,6 +208,7 @@ export default function AddHomePage() {
                 onChange={(e) => setForm({ ...form, cityId: e.target.value })}
                 value={form.cityId}
                 disabled={!selectedState}
+                required
               >
                 <option value="">Select City</option>
                 {cities.map((city) => (
@@ -233,6 +238,7 @@ export default function AddHomePage() {
                 onChange={(e) =>
                   setForm({ ...form, availableFrom: e.target.value })
                 }
+                required
               />
             </div>
             <div>
@@ -246,6 +252,7 @@ export default function AddHomePage() {
                 onChange={(e) =>
                   setForm({ ...form, availableTo: e.target.value })
                 }
+                required
               />
             </div>
           </motion.div>
