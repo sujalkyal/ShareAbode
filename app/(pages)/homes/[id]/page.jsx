@@ -118,7 +118,7 @@ export default function HomeDetailsPage() {
       {/* Image Gallery */}
       <div className="relative h-[60vh] bg-gray-200">
         <img
-          src={home.images[currentImageIndex] || "/placeholder.svg"}
+          src={home.images[currentImageIndex] || "/image-placeholder.svg"}
           alt={home.title}
           className="w-full h-full object-cover"
         />

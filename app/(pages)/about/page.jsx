@@ -202,7 +202,7 @@ const TeamMember = ({ name, role, image }) => {
       whileHover={{ y: -5 }}
     >
       <div className="aspect-square overflow-hidden">
-        <img src={image || "/placeholder.svg"} alt={name} className="w-full h-full object-cover" />
+        <img src={image || "/user-placeholder.png"} alt={name} className="w-full h-full object-cover" />
       </div>
       <div className="p-4">
         <h3 className="text-xl font-semibold">{name}</h3>
