@@ -141,7 +141,7 @@ export default function HomeDetailsPage() {
 
         {/* Image counter */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-          {currentImageIndex + 1} / {home.images.length}
+          {home.images.length==0? 0 : currentImageIndex + 1} / {home.images.length}
         </div>
 
         {/* Back button */}
